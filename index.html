@@ -13,7 +13,42 @@
         <section class="page">
             <div class="container container--center">
                 <h1 class="title title--big">User control system</h1>
-                <button class="page__btn btn btn--create">Add User</button>
+                <div class="page__create" id="create">
+                    <button class="btn btn--create page__create-btn">Add User</button>
+                    <div class="create">
+                        <form action="" class="create__form form">
+                            <div class="user-block">
+                                <div class="user-data">
+                                    <p class="user-title user-title--dark">Name:</p>
+                                    <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                </div>
+                                <div class="user-data">
+                                    <p class="user-title user-title--dark">Username:</p>
+                                    <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                </div>
+                                <div class="user-data">
+                                    <p class="user-title user-title--dark">Email:</p>
+                                    <input type="email" placeholder="Enter your name" class="input input--create" required> 
+                                </div>
+                                <div class="user-data">
+                                    <p class="user-title user-title--dark">Phone:</p>
+                                    <input type="tel" placeholder="Enter your name" class="input input--create" required> 
+                                </div>
+                            </div>
+                            <div class="user-block">
+                                <div class="user-data">
+                                    <p class="user-title user-title--dark">Address:</p>
+                                    <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                </div>
+                                <div class="user-data">
+                                    <p class="user-title user-title--dark">Website:</p>
+                                    <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+               
                 <div class="page__users users" id="users">
                     <div class="page__user user">
                         <div class="user-block">
@@ -25,8 +60,8 @@
                                         <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                                     </button>
                                 </div>
-                                <form class="user__edit edit">
-                                   <input type="text" placeholder="Enter your name" class="edit__input" required> 
+                                <form class="user__edit form">
+                                   <input type="text" placeholder="Enter your name" class="input" required> 
                                    <button class="btn btn--save" type="submit">Save</button>
                                 </form>
                             </div>
@@ -356,7 +391,6 @@
             </div>
         </section>
     </main>
-
 
     <script src="./js/app.js"></script>
 </body>
