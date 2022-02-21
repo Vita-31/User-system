@@ -1,35 +1,10 @@
 const dom = {
     usersList: document.getElementById('users'),
     create: document.getElementById('create')
-
 }
 
-const users = [
-    {
-        "id": 1,
-        "name": "Leanne Graham",
-        "username": "Bret",
-        "email": "Sincere@april.biz",
-        "address": {
-          "street": "Kulas Light",
-          "suite": "Apt. 556",
-          "city": "Gwenborough",
-          "zipcode": "92998-3874",
-          "geo": {
-            "lat": "-37.3159",
-            "lng": "81.1496"
-          }
-        },
-        "phone": "1-770-736-8031 x56442",
-        "website": "hildegard.org",
-        "company": {
-          "name": "Romaguera-Crona",
-          "catchPhrase": "Multi-layered client-server neural-net",
-          "bs": "harness real-time e-markets"
-        }
-      }
-]
-renderUsers(users, dom.usersList)
+let users = []
+getUsers()
 
 //open edit field
 dom.usersList.addEventListener('click', (e) => {
@@ -158,3 +133,31 @@ function renderUsers(users, usersList) {
     usersList.innerHTML = createUser(users)
 }
 
+async function getUsers() {
+    const response = await axios('http://localhost:1234/users');
+    users = response.data;
+    renderUsers(users, dom.usersList)
+}
+
+
+
+
+// async function getUsers(url, method = 'GET', data) {
+//     try {
+//         const response = await fetch(url, {
+//             method,
+//             body: data && JSON.stringify(data),
+//             headers: {
+//                 'content-type': 'application/json; charset=utf-8'
+//             }
+//         })
+//         if(response.ok) {
+//             const users = await response.json();
+//             renderUsers(users, dom.usersList)
+//         } else {
+//             throw new Error
+//         }
+//     } catch (error) {
+//         console.warn(error)
+//     }
+// }
