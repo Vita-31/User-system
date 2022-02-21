@@ -399,6 +399,10 @@ body {
     position: relative;
 }
 
+.user-data--full {
+    width: 100%;
+}
+
 .user-right {
     display: flex;
     align-items: center;
@@ -418,6 +422,10 @@ body {
 
 .user-title--dark {
     color: var(--dark);
+}
+
+.user-title--center {
+    text-align: center;
 }
 
 .user-text {
@@ -559,13 +567,20 @@ input:focus {
 }
 
 .create__btn {
-    margin: -45px 0 0 auto;
+    margin: 0 0 0 auto;
 }
 
 .page__create.open-create .create {
     pointer-events: unset;
 }
 
+.address {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px 0;
+}
 
 @media screen and (max-width: 992px) {
     .user {
@@ -598,7 +613,7 @@ input:focus {
 
     .form {
         flex-direction: column;
-        gap: 20px 0;
+        gap: 40px 0;
     }
 
     .create__btn {

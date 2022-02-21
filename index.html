@@ -13,37 +13,52 @@
         <section class="page">
             <div class="container container--center">
                 <h1 class="title title--big">User control system</h1>
-                <div class="page__create" id="create">
+                <div class="page__create edit-data"  id="create">
                     <button class="btn btn--create page__create-btn">Add User</button>
-                    <div class="create">
-                        <form action="" class="create__form">
+                    <div class="create" style="height: 100%; pointer-events: unset; overflow: unset;">
+                        <form action="" class="create__form" id="form-create">
                             <div class="form">
                                 <div class="user-block">
                                     <div class="user-data">
                                         <p class="user-title user-title--dark">Name:</p>
-                                        <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                        <input type="text" name="name" placeholder="Enter your name" class="input input--create" required> 
                                     </div>
                                     <div class="user-data">
                                         <p class="user-title user-title--dark">Username:</p>
-                                        <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                        <input type="text" name="username" placeholder="Enter your username" class="input input--create" required> 
                                     </div>
                                     <div class="user-data">
                                         <p class="user-title user-title--dark">Email:</p>
-                                        <input type="email" placeholder="Enter your name" class="input input--create" required> 
+                                        <input type="email" name="email" placeholder="Enter your email" class="input input--create" required> 
                                     </div>
                                     <div class="user-data">
                                         <p class="user-title user-title--dark">Phone:</p>
-                                        <input type="tel" placeholder="Enter your name" class="input input--create" required> 
-                                    </div>
-                                </div>
-                                <div class="user-block">
-                                    <div class="user-data">
-                                        <p class="user-title user-title--dark">Address:</p>
-                                        <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                        <input type="tel" name="phone" placeholder="Enter your phone" class="input input--create" required> 
                                     </div>
                                     <div class="user-data">
                                         <p class="user-title user-title--dark">Website:</p>
-                                        <input type="text" placeholder="Enter your name" class="input input--create" required> 
+                                        <input type="text" name="website" placeholder="Enter your website" class="input input--create" required> 
+                                    </div>
+                                </div>
+                                <div class="user-block">
+                                    <div class="address">
+                                        <p class="user-title user-title--dark user-title--center">Address:</p>
+                                        <div class="user-data user-data--full">
+                                            <p class="user-title user-title--dark">Street:</p>
+                                            <input type="text" name="street" placeholder="Enter your street" class="input input--create" required> 
+                                        </div>
+                                        <div class="user-data user-data--full">
+                                            <p class="user-title user-title--dark">Suite:</p>
+                                            <input type="text" name="suite" placeholder="Enter your suite" class="input input--create" required> 
+                                        </div>
+                                        <div class="user-data user-data--full">
+                                            <p class="user-title user-title--dark">City:</p>
+                                            <input type="text" name="city" placeholder="Enter your city" class="input input--create" required> 
+                                        </div>
+                                        <div class="user-data user-data--full">
+                                            <p class="user-title user-title--dark">Zipcode:</p>
+                                            <input type="number" name="zipcode" placeholder="Enter your zipcode" class="input input--create" required> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>

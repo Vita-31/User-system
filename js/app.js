@@ -1,7 +1,7 @@
 const dom = {
     usersList: document.getElementById('users'),
     create: document.getElementById('create'),
-    
+    createForm: document.getElementById('form-create')
 }
 
 let users = []
@@ -21,24 +21,47 @@ dom.usersList.addEventListener('click', (e) => {
 })
 
 //toggle create block
-dom.create.addEventListener('click', (e) => {
-    const btnCreate = e.target.closest('.btn--create');
-    const createBlock = dom.create.querySelector('.create');
+// dom.create.addEventListener('click', (e) => {
+//     const btnCreate = e.target.closest('.btn--create');
+//     const createBlock = dom.create.querySelector('.create');
 
-    if(btnCreate) {
-        if(dom.create.classList.contains('open-create')) {
-            dom.create.classList.remove('open-create')
-            createBlock.removeAttribute('style')
-        } else {
-            dom.create.classList.add('open-create')
-            createBlock.style.height = createBlock.scrollHeight + 'px'
-        }
-    }
-})
+//     // if(btnCreate) {
+//     //     if(dom.create.classList.contains('open-create')) {
+//     //         dom.create.classList.remove('open-create')
+//     //         createBlock.removeAttribute('style')
+//     //     } else {
+//     //         dom.create.classList.add('open-create')
+//     //         createBlock.style.height = createBlock.scrollHeight + 'px'
+//     //     }
+//     // }
+// })
 
 //submit form of create users
-dom.create.addEventListener('submit', (e) => {
-    console.log(e.target)
+dom.createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameValue = e.target.name.value;
+    const usernameValue = e.target.username.value;
+    const emailValue = e.target.email.value;
+    const phoneValue = e.target.phone.value;
+    const websiteValue = e.target.website.value;
+    const streetValue = e.target.street.value;
+    const suiteValue = e.target.suite.value;
+    const cityValue = e.target.city.value;
+    const zipcodeValue = e.target.zipcode.value;
+    const newUser = {
+        name: nameValue,
+        username: usernameValue,
+        email: emailValue,
+        phone: phoneValue,
+        website: websiteValue,
+        address: {
+            street: streetValue,
+            suite: suiteValue,
+            city: cityValue,
+            zipcode: zipcodeValue
+        }
+    }
+    e.target.reset()
 })
 
 function createUserHTMl(user) { 
