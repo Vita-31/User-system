@@ -61,6 +61,7 @@ dom.createForm.addEventListener('submit', (e) => {
             zipcode: zipcodeValue
         }
     }
+    postUser(newUser)
     e.target.reset()
 })
 
@@ -163,12 +164,20 @@ function renderUsers(users, usersList) {
 }
 
 async function getUsers() {
-    const response = await axios('http://localhost:1234/users');
+    const response = await axios.get('http://localhost:1234/users');
     users = response.data;
     renderUsers(users, dom.usersList)
 }
 
-
+async function postUser(newUser) {
+    console.log(newUser)
+    try {
+        const response = await axios.post('http://localhost:1234/users', newUser)
+        console.log(response)
+    } catch (error) {
+        console.warn(error)
+    }
+}
 
 
 // async function getUsers(url, method = 'GET', data) {
