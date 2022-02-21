@@ -1,6 +1,7 @@
 const dom = {
     usersList: document.getElementById('users'),
-    create: document.getElementById('create')
+    create: document.getElementById('create'),
+    
 }
 
 let users = []
@@ -33,6 +34,11 @@ dom.create.addEventListener('click', (e) => {
             createBlock.style.height = createBlock.scrollHeight + 'px'
         }
     }
+})
+
+//submit form of create users
+dom.create.addEventListener('submit', (e) => {
+    console.log(e.target)
 })
 
 function createUserHTMl(user) { 

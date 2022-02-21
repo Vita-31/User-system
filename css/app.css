@@ -488,7 +488,7 @@ body {
 .form {
     width: 100%;
     display: flex;
-    gap: 0 10px;
+    gap: 0 50px;
 }
 
 .user__edit {
@@ -535,7 +535,7 @@ input:focus {
 
 .input--create {
    border: 2px solid var(--dark);
-   max-width: 350px;
+   max-width: 100%;
 }
 
 .create {
@@ -554,6 +554,12 @@ input:focus {
     border: 2px solid var(--gray);
     border-radius: 8px;
     background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+}
+
+.create__btn {
+    margin: -45px 0 0 auto;
 }
 
 .page__create.open-create .create {
@@ -580,7 +586,7 @@ input:focus {
         gap: 20px 0;
     }
 
-    .create {
+    .create__form {
         padding: 20px 10px;
     }
 
@@ -588,6 +594,15 @@ input:focus {
         max-width: 100%;
         margin-right: 0;
         margin-top: 10px;
+    }
+
+    .form {
+        flex-direction: column;
+        gap: 20px 0;
+    }
+
+    .create__btn {
+        margin: 0 0 0 0;
     }
 }
 
@@ -615,5 +630,9 @@ input:focus {
     .user__edit {
         margin-right: 0;
         margin-top: 10px;
+    }
+
+    .btn--create {
+        max-width: 100%;
     }
 }
