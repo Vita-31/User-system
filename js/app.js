@@ -20,21 +20,21 @@ dom.usersList.addEventListener('click', (e) => {
     }
 })
 
-//toggle create block
-// dom.create.addEventListener('click', (e) => {
-//     const btnCreate = e.target.closest('.btn--create');
-//     const createBlock = dom.create.querySelector('.create');
+// toggle create block
+dom.create.addEventListener('click', (e) => {
+    const btnCreate = e.target.closest('.page__create-btn');
+    const createBlock = dom.create.querySelector('.create');
 
-//     // if(btnCreate) {
-//     //     if(dom.create.classList.contains('open-create')) {
-//     //         dom.create.classList.remove('open-create')
-//     //         createBlock.removeAttribute('style')
-//     //     } else {
-//     //         dom.create.classList.add('open-create')
-//     //         createBlock.style.height = createBlock.scrollHeight + 'px'
-//     //     }
-//     // }
-// })
+    if(btnCreate) {
+        if(dom.create.classList.contains('open-create')) {
+            dom.create.classList.remove('open-create')
+            createBlock.removeAttribute('style')
+        } else {
+            dom.create.classList.add('open-create')
+            createBlock.style.height = createBlock.scrollHeight + 'px'
+        }
+    }
+})
 
 //submit form of create users
 dom.createForm.addEventListener('submit', (e) => {
@@ -170,32 +170,11 @@ async function getUsers() {
 }
 
 async function postUser(newUser) {
-    console.log(newUser)
     try {
         const response = await axios.post('http://localhost:1234/users', newUser)
-        console.log(response)
+        users.push(response.data)
+        renderUsers(users, dom.usersList)
     } catch (error) {
         console.warn(error)
     }
 }
-
-
-// async function getUsers(url, method = 'GET', data) {
-//     try {
-//         const response = await fetch(url, {
-//             method,
-//             body: data && JSON.stringify(data),
-//             headers: {
-//                 'content-type': 'application/json; charset=utf-8'
-//             }
-//         })
-//         if(response.ok) {
-//             const users = await response.json();
-//             renderUsers(users, dom.usersList)
-//         } else {
-//             throw new Error
-//         }
-//     } catch (error) {
-//         console.warn(error)
-//     }
-// }
