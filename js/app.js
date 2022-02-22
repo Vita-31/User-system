@@ -1,24 +1,44 @@
 const dom = {
     usersList: document.getElementById('users'),
     create: document.getElementById('create'),
-    createForm: document.getElementById('form-create')
+    createForm: document.getElementById('form-create'),
+    modal: document.getElementById('modal'),
+    formEdit: document.querySelector('.user__edit')
 }
 
 let users = []
 getUsers()
 
-//open edit field
 dom.usersList.addEventListener('click', (e) => {
+    const userId = Number(e.target.closest('.page__user').dataset.id);
     const btnEdit = e.target.closest('.user__btn');
-    const userBlock = e.target.closest('.user-data');
-    const btnSave = e.target.closest('.btn--save')
+    const btnCancel = e.target.closest('.user__cancel');
     if(btnEdit) {
-        userBlock.classList.add('edit-data')
+        dom.modal.classList.add('open-edit')
     }
-    if(btnSave) {
-        userBlock.classList.remove('edit-data')
+    if(btnCancel) {
+        deleteUser(userId)
     }
 })
+
+//save update data
+dom.modal.addEventListener('click', (e) => {
+    const btnSave = e.target.closest('.btn--save');
+    const overlay = e.target.closest('.overlay');
+    if(btnSave || overlay) {
+        dom.modal.classList.remove('open-edit');
+        editDate()
+    }
+})
+
+//submit update 
+function editDate() {
+    dom.formEdit.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const updateName = e.target.name.value;
+    })
+}
+
 
 // toggle create block
 dom.create.addEventListener('click', (e) => {
@@ -67,7 +87,7 @@ dom.createForm.addEventListener('submit', (e) => {
 
 function createUserHTMl(user) { 
     return  `
-            <div class="page__user user" id="${user.id}">
+            <div class="page__user user" data-id="${user.id}">
                 <div class="user-block">
                     <div class="user-data">
                         <p class="user-title">Name:</p>
@@ -77,10 +97,6 @@ function createUserHTMl(user) {
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
-                        <form class="user__edit form">
-                        <input type="text" placeholder="Enter your name" class="input" required> 
-                        <button class="btn btn--save" type="submit">Save</button>
-                        </form>
                     </div>
                     <div class="user-data">
                         <p class="user-title">Username:</p>
@@ -90,10 +106,6 @@ function createUserHTMl(user) {
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
-                        <form class="user__edit edit">
-                            <input type="text" placeholder="Enter your name" class="edit__input" required> 
-                            <button class="btn btn--save" type="submit">Save</button>
-                        </form>
                     </div>
                     <div class="user-data">
                         <p class="user-title">Email:</p>
@@ -103,10 +115,6 @@ function createUserHTMl(user) {
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
-                        <form class="user__edit edit">
-                            <input type="email" placeholder="Enter your name" class="edit__input" required> 
-                            <button class="btn btn--save" type="submit">Save</button>
-                        </form>
                     </div>
                     <div class="user-data">
                         <p class="user-title">Phone:</p>
@@ -116,10 +124,6 @@ function createUserHTMl(user) {
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
-                        <form class="user__edit edit">
-                            <input type="tel" placeholder="Enter your name" class="edit__input" required> 
-                            <button class="btn btn--save" type="submit">Save</button>
-                        </form>
                     </div>
                 </div>
                 <div class="user-block">
@@ -131,10 +135,6 @@ function createUserHTMl(user) {
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
-                        <form class="user__edit edit">
-                            <input type="text" placeholder="Enter your name" class="edit__input" required> 
-                            <button class="btn btn--save" type="submit">Save</button>
-                        </form>
                     </div>
                     <div class="user-data">
                         <p class="user-title">Website:</p>
@@ -144,10 +144,6 @@ function createUserHTMl(user) {
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
-                        <form class="user__edit edit">
-                            <input type="text" placeholder="Enter your name" class="edit__input" required> 
-                            <button class="btn btn--save" type="submit">Save</button>
-                        </form>
                     </div>
                     <button class="btn btn--cancel user__cancel">Delete User</button>
                 </div>
@@ -173,6 +169,16 @@ async function postUser(newUser) {
     try {
         const response = await axios.post('http://localhost:1234/users', newUser)
         users.push(response.data)
+        renderUsers(users, dom.usersList)
+    } catch (error) {
+        console.warn(error)
+    }
+}
+
+async function deleteUser(userId) {
+    try {
+        await axios.delete(`http://localhost:1234/users/${userId}`)
+        users = users.filter((user) => user.id !== userId)
         renderUsers(users, dom.usersList)
     } catch (error) {
         console.warn(error)
