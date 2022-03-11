@@ -3,7 +3,7 @@ const dom = {
     create: document.getElementById('create'),
     createForm: document.getElementById('form-create'),
     modal: document.getElementById('modal'),
-    formEdit: document.querySelector('.user__edit')
+    formEdit: document.getElementById('form-modal')
 }
 
 let users = []
@@ -14,7 +14,12 @@ dom.usersList.addEventListener('click', (e) => {
     const btnEdit = e.target.closest('.user__btn');
     const btnCancel = e.target.closest('.user__cancel');
     if(btnEdit) {
-        dom.modal.classList.add('open-edit')
+        const inputValue = btnEdit.previousElementSibling.textContent;
+        const inputKey = btnEdit.previousElementSibling.dataset.key;
+        dom.modal.classList.add('open-edit');
+        dom.formEdit.userid.value = userId;
+        dom.formEdit.input.value = inputValue;
+        dom.formEdit.key.value = inputKey;
     }
     if(btnCancel) {
         deleteUser(userId)
@@ -23,28 +28,33 @@ dom.usersList.addEventListener('click', (e) => {
 
 //save update data
 dom.modal.addEventListener('click', (e) => {
-    const btnSave = e.target.closest('.btn--save');
     const overlay = e.target.closest('.overlay');
-    if(btnSave || overlay) {
+    if(overlay) {
         dom.modal.classList.remove('open-edit');
-        editDate()
     }
 })
 
-//submit update 
-function editDate() {
-    dom.formEdit.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const updateName = e.target.name.value;
-    })
-}
+// submit update 
+dom.formEdit.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let updateValue = e.target.input.value;
+    const modalUserId = Number(e.target.userid.value);
+    const updateKey = e.target.key.value;
+    if(updateKey === 'address') {
+        const arrAddress = updateValue.split(',');
+        const [street, suite, city, zipcode] = arrAddress;
+        updateValue = { street, suite, city, zipcode };
+    }
+    patchUser(modalUserId, { [updateKey]: updateValue });
+    dom.modal.classList.remove('open-edit');
+})
+
 
 
 // toggle create block
 dom.create.addEventListener('click', (e) => {
     const btnCreate = e.target.closest('.page__create-btn');
     const createBlock = dom.create.querySelector('.create');
-
     if(btnCreate) {
         if(dom.create.classList.contains('open-create')) {
             dom.create.classList.remove('open-create')
@@ -92,7 +102,7 @@ function createUserHTMl(user) {
                     <div class="user-data">
                         <p class="user-title">Name:</p>
                         <div class="user-right">
-                            <p class="user-text">${user.name}</p>
+                            <p class="user-text" data-key="name">${user.name}</p>
                             <button class="btn user__btn">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
@@ -101,7 +111,7 @@ function createUserHTMl(user) {
                     <div class="user-data">
                         <p class="user-title">Username:</p>
                         <div class="user-right">
-                            <p class="user-text">${user.username}</p>
+                            <p class="user-text" data-key="username">${user.username}</p>
                             <button class="btn user__btn">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
@@ -110,7 +120,7 @@ function createUserHTMl(user) {
                     <div class="user-data">
                         <p class="user-title">Email:</p>
                         <div class="user-right">
-                            <a href="mailto:Sincere@april.biz" class="user-text">${user.email}</a>
+                            <a href="mailto:${user.email}" class="user-text" data-key="email">${user.email}</a>
                             <button class="btn user__btn">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
@@ -119,7 +129,7 @@ function createUserHTMl(user) {
                     <div class="user-data">
                         <p class="user-title">Phone:</p>
                         <div class="user-right">
-                            <a href="tel:1770736803156442" class="user-text">${user.phone}</a>
+                            <a href="tel:${user.phone}" class="user-text" data-key="phone">${user.phone}</a>
                             <button class="btn user__btn">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
@@ -130,7 +140,7 @@ function createUserHTMl(user) {
                     <div class="user-data">
                         <p class="user-title">Address:</p>
                         <div class="user-right">
-                            <p class="user-text"> <span>${user.address.street},</span> <span>${user.address.suite},</span> <span>${user.address.city},</span> <span>${user.address.zipcode}</span></p>
+                            <p class="user-text"  data-key="address"> <span>${user.address.street},</span> <span>${user.address.suite},</span> <span>${user.address.city},</span> <span>${user.address.zipcode}</span></p>
                             <button class="btn user__btn">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
@@ -139,7 +149,7 @@ function createUserHTMl(user) {
                     <div class="user-data">
                         <p class="user-title">Website:</p>
                         <div class="user-right">
-                            <a href="/hildegard.org" class="user-text">${user.website}</a>
+                            <a href="/hildegard.org" class="user-text" data-key="website">${user.website}</a>
                             <button class="btn user__btn">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
@@ -175,10 +185,21 @@ async function postUser(newUser) {
     }
 }
 
+async function patchUser(userId, updatingData) {
+    try {
+        const response = await axios.patch(`http://localhost:1234/users/${userId}`, updatingData);
+        const userIdx = users.findIndex(user => user.id === userId);
+        users.splice(userIdx, 1, response.data)
+        renderUsers(users, dom.usersList)
+    } catch (error) {
+        console.warn(error)
+    }
+}
+
 async function deleteUser(userId) {
     try {
-        await axios.delete(`http://localhost:1234/users/${userId}`)
-        users = users.filter((user) => user.id !== userId)
+        await axios.delete(`http://localhost:1234/users/${userId}`);
+        users = users.filter((user) => user.id !== userId);
         renderUsers(users, dom.usersList)
     } catch (error) {
         console.warn(error)

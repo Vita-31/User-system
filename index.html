@@ -75,8 +75,10 @@
     <div class="modal" id="modal">
         <div class="overlay"></div>
         <div class="modal-container">
-            <form class="user__edit form form--edit">
-                <input type="text" placeholder="Enter your name" name="name" class="input" required> 
+            <form class="user__edit form form--edit" id="form-modal">
+                <input type="hidden" name="userid">
+                <input type="hidden" name="key">
+                <input type="text" name="input" class="input" required> 
                 <button class="btn btn--save" type="submit">Save</button>
             </form>
         </div>
