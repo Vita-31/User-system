@@ -76,10 +76,32 @@
         <div class="overlay"></div>
         <div class="modal-container">
             <form class="user__edit form form--edit" id="form-modal">
-                <input type="hidden" name="userid">
-                <input type="hidden" name="key">
-                <input type="text" name="input" class="input" required> 
-                <button class="btn btn--save" type="submit">Save</button>
+                <div class="modal__fields">
+                    <input type="hidden" name="userid">
+                    <input type="hidden" name="key">
+                    <input type="text" name="input" class="input" required>
+                    <button class="btn btn--save" type="submit">Save</button>
+                </div>
+                <div class="modal__address address">
+                    <p class="user-title user-title--dark user-title--center">Address:</p>
+                    <div class="user-data user-data--full">
+                        <p class="user-title user-title--dark">Street:</p>
+                        <input type="text" name="street" placeholder="Enter your street" class="input input--create" required> 
+                    </div>
+                    <div class="user-data user-data--full">
+                        <p class="user-title user-title--dark">Suite:</p>
+                        <input type="text" name="suite" placeholder="Enter your suite" class="input input--create" required> 
+                    </div>
+                    <div class="user-data user-data--full">
+                        <p class="user-title user-title--dark">City:</p>
+                        <input type="text" name="city" placeholder="Enter your city" class="input input--create" required> 
+                    </div>
+                    <div class="user-data user-data--full">
+                        <p class="user-title user-title--dark">Zipcode:</p>
+                        <input type="number" name="zipcode" placeholder="Enter your zipcode" class="input input--create" required> 
+                    </div>
+                    <button class="btn btn--save btn--address" type="submit">Save</button>
+                </div>
             </form>
         </div>
     </div>

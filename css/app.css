@@ -447,6 +447,12 @@ body {
     border: 2px solid var(--light-blue);
     background-color: var(--light-blue);
     border-radius: 4px;
+    padding: 12px 15px;
+}
+
+.btn--address {
+    max-width: 240px;
+    padding: 12px 15px;
 }
 
 .btn--create {
@@ -500,7 +506,9 @@ body {
 }
 
 .form--edit {
-    gap: 0 20px;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* .user-data.edit-data .user-right {
@@ -602,7 +610,24 @@ input:focus {
     height: auto;
     padding: 20px;
     background-color: var(--white);
+    border-radius: 8px;
     z-index: 10;
+}
+
+.modal__address {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal__fields {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    position: unset;
+    opacity: 1;
+    pointer-events: unset;
 }
 
 .modal.open-edit {
@@ -613,6 +638,18 @@ input:focus {
 .modal.open-edit .overlay {
     opacity: 1;
     pointer-events: unset;
+}
+
+.modal.show-address .modal__address {
+    position: unset;
+    opacity: 1;
+    pointer-events: unset;
+}
+
+.modal.show-address .modal__fields {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @media screen and (max-width: 992px) {
@@ -682,5 +719,17 @@ input:focus {
 
     .btn--create {
         max-width: 100%;
+    }
+
+    .btn--save {
+        max-width: 100%;
+    }
+
+    .modal {
+        padding: 15px;
+    }
+
+    .modal__fields {
+        flex-direction: column;
     }
 }

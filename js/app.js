@@ -13,6 +13,7 @@ dom.usersList.addEventListener('click', (e) => {
     const userId = Number(e.target.closest('.page__user').dataset.id);
     const btnEdit = e.target.closest('.user__btn');
     const btnCancel = e.target.closest('.user__cancel');
+    const btnAddress = btnEdit.dataset.btn;
     if(btnEdit) {
         const inputValue = btnEdit.previousElementSibling.textContent;
         const inputKey = btnEdit.previousElementSibling.dataset.key;
@@ -23,6 +24,11 @@ dom.usersList.addEventListener('click', (e) => {
     }
     if(btnCancel) {
         deleteUser(userId)
+    }
+    if(btnAddress) {
+        dom.modal.classList.add('show-address');
+    } else {
+        dom.modal.classList.remove('show-address');
     }
 })
 
@@ -133,7 +139,7 @@ function createUserHTMl(user) {
                         <p class="user-title">Address:</p>
                         <div class="user-right">
                             <p class="user-text"  data-key="address"> <span>${user.address.street},</span> <span>${user.address.suite},</span> <span>${user.address.city},</span> <span>${user.address.zipcode}</span></p>
-                            <button class="btn user__btn">
+                            <button class="btn user__btn" data-btn="address">
                                 <img src="./img/edit.svg" class="btn__edit" alt="Edit" width="1" height="1" decoding="async">
                             </button>
                         </div>
