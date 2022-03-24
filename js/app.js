@@ -182,7 +182,7 @@ async function postUser(newUser) {
 
 async function patchUser(userId, updatingData) {
     try {
-        const response = await axios.patch(`https://app-json3.herokuapp.com/${userId}`, updatingData);
+        const response = await axios.patch(`https://app-json3.herokuapp.com/users/${userId}`, updatingData);
         const userIdx = users.findIndex(user => user.id === userId);
         users.splice(userIdx, 1, response.data)
         renderUsers(users, dom.usersList)
@@ -193,7 +193,7 @@ async function patchUser(userId, updatingData) {
 
 async function deleteUser(userId) {
     try {
-        await axios.delete(`https://app-json3.herokuapp.com/${userId}`);
+        await axios.delete(`https://app-json3.herokuapp.com/users/${userId}`);
         users = users.filter((user) => user.id !== userId);
         renderUsers(users, dom.usersList)
     } catch (error) {
