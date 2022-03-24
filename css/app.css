@@ -641,14 +641,12 @@ input:focus {
 }
 
 .modal.show-address .modal__address {
-    display: none;
     position: unset;
     opacity: 1;
     pointer-events: unset;
 }
 
 .modal.show-address .modal__fields {
-    display: none;
     position: absolute;
     opacity: 0;
     pointer-events: none;
