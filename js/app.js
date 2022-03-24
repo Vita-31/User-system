@@ -13,7 +13,7 @@ dom.usersList.addEventListener('click', (e) => {
     const userId = Number(e.target.closest('.page__user').dataset.id);
     const btnEdit = e.target.closest('.user__btn');
     const btnCancel = e.target.closest('.user__cancel');
-    const btnAddress = btnEdit.dataset.btn;
+    const btnAddress = btnEdit?.dataset.btn;
     if(btnEdit) {
         const inputValue = btnEdit.previousElementSibling.textContent;
         const inputKey = btnEdit.previousElementSibling.dataset.key;
@@ -47,15 +47,12 @@ dom.formEdit.addEventListener('submit', (e) => {
     const modalUserId = Number(e.target.userid.value);
     const updateKey = e.target.key.value;
     if(updateKey === 'address') {
-        const arrAddress = updateValue.split(',');
-        const [street, suite, city, zipcode] = arrAddress;
+        const {street, suite, city, zipcode} = getData(e.target);
         updateValue = { street, suite, city, zipcode };
     }
     patchUser(modalUserId, { [updateKey]: updateValue });
     dom.modal.classList.remove('open-edit');
 })
-
-
 
 // toggle create block
 dom.create.addEventListener('click', (e) => {
@@ -168,14 +165,14 @@ function renderUsers(users, usersList) {
 }
 
 async function getUsers() {
-    const response = await axios.get('http://localhost:1234/users');
+    const response = await axios.get('https://app-json3.herokuapp.com/users');
     users = response.data;
     renderUsers(users, dom.usersList)
 }
 
 async function postUser(newUser) {
     try {
-        const response = await axios.post('http://localhost:1234/users', newUser)
+        const response = await axios.post('https://app-json3.herokuapp.com/users', newUser)
         users.push(response.data)
         renderUsers(users, dom.usersList)
     } catch (error) {
@@ -185,7 +182,7 @@ async function postUser(newUser) {
 
 async function patchUser(userId, updatingData) {
     try {
-        const response = await axios.patch(`http://localhost:1234/users/${userId}`, updatingData);
+        const response = await axios.patch(`https://app-json3.herokuapp.com/${userId}`, updatingData);
         const userIdx = users.findIndex(user => user.id === userId);
         users.splice(userIdx, 1, response.data)
         renderUsers(users, dom.usersList)
@@ -196,7 +193,7 @@ async function patchUser(userId, updatingData) {
 
 async function deleteUser(userId) {
     try {
-        await axios.delete(`http://localhost:1234/users/${userId}`);
+        await axios.delete(`https://app-json3.herokuapp.com/${userId}`);
         users = users.filter((user) => user.id !== userId);
         renderUsers(users, dom.usersList)
     } catch (error) {
