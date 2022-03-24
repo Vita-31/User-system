@@ -69,26 +69,18 @@ dom.create.addEventListener('click', (e) => {
 //submit form of create users
 dom.createForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nameValue = e.target.name.value;
-    const usernameValue = e.target.username.value;
-    const emailValue = e.target.email.value;
-    const phoneValue = e.target.phone.value;
-    const websiteValue = e.target.website.value;
-    const streetValue = e.target.street.value;
-    const suiteValue = e.target.suite.value;
-    const cityValue = e.target.city.value;
-    const zipcodeValue = e.target.zipcode.value;
+    const {name, username, email, phone, website, street, suite, city, zipcode} =  getData(e.target)
     const newUser = {
-        name: nameValue,
-        username: usernameValue,
-        email: emailValue,
-        phone: phoneValue,
-        website: websiteValue,
+        name,
+        username,
+        email,
+        phone,
+        website,
         address: {
-            street: streetValue,
-            suite: suiteValue,
-            city: cityValue,
-            zipcode: zipcodeValue
+            street,
+            suite,
+            city,
+            zipcode
         }
     }
     postUser(newUser)
@@ -204,4 +196,13 @@ async function deleteUser(userId) {
     } catch (error) {
         console.warn(error)
     }
+}
+
+function getData(form) {
+    let objData = {};
+	const formData = new FormData(form);
+	for (var key of formData.keys()) {
+		objData[key] = formData.get(key);
+	}
+	return objData
 }
