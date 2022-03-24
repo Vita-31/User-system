@@ -451,7 +451,7 @@ body {
 }
 
 .btn--address {
-    max-width: 240px;
+    width: 100%;
     padding: 12px 15px;
 }
 
