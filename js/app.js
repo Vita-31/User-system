@@ -19,8 +19,17 @@ dom.usersList.addEventListener('click', (e) => {
         const inputKey = btnEdit.previousElementSibling.dataset.key;
         dom.modal.classList.add('open-edit');
         dom.formEdit.userid.value = userId;
-        dom.formEdit.input.value = inputValue;
         dom.formEdit.key.value = inputKey;
+        if (inputKey !== 'address') {
+            dom.formEdit.input.value = inputValue;
+        } else{
+            const inputValuesArray = inputValue.split(',')
+            dom.formEdit.street.value = inputValuesArray[0].trim()
+            dom.formEdit.suite.value = inputValuesArray[1].trim()
+            dom.formEdit.city.value = inputValuesArray[2].trim()
+            dom.formEdit.zipcode.value = inputValuesArray[3].trim()
+        }
+        
     }
     if(btnCancel) {
         deleteUser(userId)
